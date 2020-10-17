@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    WebSocket Test
+
+    <script>
+        var url = "ws://" + window.location.host + "/ws";
+        var ws = new WebSocket(url);
+        console.log("ws.send(データ/JSON.stringifyしたデータ)");
+        ws.onmessage = function wscatch(m) {
+            console.log(m.data)
+        }
+    </script>
+</body>
+
+</html>
