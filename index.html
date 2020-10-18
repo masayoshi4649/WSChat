@@ -10,12 +10,26 @@
 <body>
     WebSocket Test
 
+    <input id="input" type="text" />
+    <button onclick="send()">送信</button>
+    <pre id="output"></pre>
+
+
     <script>
+        const input = document.getElementById('input');
+        const output = document.getElementById('output');
+
+
         var url = "ws://" + window.location.host + "/ws";
         var ws = new WebSocket(url);
         console.log("ws.send(データ/JSON.stringifyしたデータ)");
-        ws.onmessage = function wscatch(m) {
+        ws.onmessage = function (m) {
             console.log(m.data)
+            output.innerHTML += m.data + "\n";
+        }
+
+        function send() {
+            ws.send(input.value);
         }
     </script>
 </body>
