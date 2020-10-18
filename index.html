@@ -14,22 +14,37 @@
     <button onclick="send()">送信</button>
     <pre id="output"></pre>
 
-
     <script>
         const input = document.getElementById('input');
         const output = document.getElementById('output');
 
+        const url = "ws://" + window.location.host + "/ws";
 
-        var url = "ws://" + window.location.host + "/ws";
-        var ws = new WebSocket(url);
-        console.log("ws.send(データ/JSON.stringifyしたデータ)");
+        let ws = new WebSocket(url);
+
         ws.onmessage = function (m) {
             console.log(m.data)
             output.innerHTML += m.data + "\n";
         }
 
+        ws.onerror = function (e) {
+            console.log("ERROR");
+            console.log(e);
+            ws.close();
+        }
+
+        ws.onclose = function (c) {
+            console.log("close");
+        }
+
+
         function send() {
-            ws.send(input.value);
+            if (ws.readyState == ws.OPEN) {
+                ws.send(input.value);
+            } else {
+                console.log("connect Failed");
+                location.reload();
+            }
         }
     </script>
 </body>
